@@ -1,0 +1,10 @@
+# Generated files - never push these
+nginx.conf
+docker-compose.yml
+
+# Never push SSH keys
+*.pem
+
+# Python cache
+__pycache__/
+*.pyc

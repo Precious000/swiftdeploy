@@ -1,0 +1,247 @@
+#!/usr/bin/env bash
+# swiftdeploy — declarative deployment CLI
+# All config is derived from manifest.yaml
+
+set -euo pipefail   # exit on error, undefined var, or pipe failure
+
+MANIFEST="manifest.yaml"
+COMPOSE_FILE="docker-compose.yml"
+NGINX_CONF="nginx.conf"
+NGINX_TMPL="templates/nginx.conf.tmpl"
+COMPOSE_TMPL="templates/docker-compose.yml.tmpl"
+
+# ── helper: read a value from manifest.yaml ──────────────────────────────────
+# Usage: get_manifest "services.port"
+get_manifest() {
+    python3 -c "
+import yaml, sys
+with open('$MANIFEST') as f:
+    data = yaml.safe_load(f)
+keys = '$1'.split('.')
+val = data
+for k in keys:
+    val = val[k]
+print(val)
+"
+}
+
+# ── helper: update a value in manifest.yaml in-place ─────────────────────────
+set_manifest() {
+    local key_path="$1"  # e.g. "services.mode"
+    local value="$2"
+    python3 - "$key_path" "$value" << 'PY'
+import yaml, sys
+key_path, value = sys.argv[1], sys.argv[2]
+with open("manifest.yaml") as f:
+    data = yaml.safe_load(f)
+keys = key_path.split(".")
+obj = data
+for k in keys[:-1]:
+    obj = obj[k]
+obj[keys[-1]] = value
+with open("manifest.yaml", "w") as f:
+    yaml.dump(data, f, default_flow_style=False)
+PY
+}
+
+# ── subcommand: init ──────────────────────────────────────────────────────────
+cmd_init() {
+    echo "→ Reading manifest.yaml..."
+
+    APP_IMAGE=$(get_manifest "services.image")
+    APP_PORT=$(get_manifest "services.port")
+    APP_MODE=$(get_manifest "services.mode")
+    APP_VERSION=$(get_manifest "services.version")
+    APP_RESTART=$(get_manifest "services.restart_policy")
+
+    NGINX_IMAGE=$(get_manifest "nginx.image")
+    NGINX_PORT=$(get_manifest "nginx.port")
+    PROXY_TIMEOUT=$(get_manifest "nginx.proxy_timeout")
+
+    NET_NAME=$(get_manifest "network.name")
+    NET_DRIVER=$(get_manifest "network.driver_type")
+    LOGS_VOL=$(get_manifest "volumes.logs")
+
+    echo "→ Generating nginx.conf..."
+    sed \
+        -e "s|__NGINX_PORT__|${NGINX_PORT}|g" \
+        -e "s|__APP_PORT__|${APP_PORT}|g" \
+        -e "s|__PROXY_TIMEOUT__|${PROXY_TIMEOUT}|g" \
+        -e "s|__SERVICE_NAME__|swiftdeploy-app|g" \
+        "$NGINX_TMPL" > "$NGINX_CONF"
+
+    echo "→ Generating docker-compose.yml..."
+    sed \
+        -e "s|__NGINX_IMAGE__|${NGINX_IMAGE}|g" \
+        -e "s|__NGINX_PORT__|${NGINX_PORT}|g" \
+        -e "s|__APP_IMAGE__|${APP_IMAGE}|g" \
+        -e "s|__APP_PORT__|${APP_PORT}|g" \
+        -e "s|__MODE__|${APP_MODE}|g" \
+        -e "s|__APP_VERSION__|${APP_VERSION}|g" \
+        -e "s|__NETWORK_NAME__|${NET_NAME}|g" \
+        -e "s|__NETWORK_DRIVER__|${NET_DRIVER}|g" \
+        -e "s|__LOGS_VOLUME__|${LOGS_VOL}|g" \
+        -e "s|__RESTART_POLICY__|${APP_RESTART}|g" \
+        "$COMPOSE_TMPL" > "$COMPOSE_FILE"
+
+    echo "✓ init complete: nginx.conf and docker-compose.yml generated"
+}
+
+# ── subcommand: validate ──────────────────────────────────────────────────────
+cmd_validate() {
+    PASS=0; FAIL=0
+
+    check() {
+        local label="$1"; local result="$2"
+        if [ "$result" = "pass" ]; then
+            echo "  [PASS] $label"; PASS=$((PASS+1))
+        else
+            echo "  [FAIL] $label — $result"; FAIL=$((FAIL+1))
+        fi
+    }
+
+    echo "Running pre-flight checks..."
+
+    # 1. manifest.yaml exists and is valid YAML
+    if [ -f "$MANIFEST" ] && python3 -c "import yaml; yaml.safe_load(open('$MANIFEST'))" 2>/dev/null; then
+        check "manifest.yaml exists and is valid YAML" "pass"
+    else
+        check "manifest.yaml exists and is valid YAML" "file missing or invalid YAML"
+    fi
+
+    # 2. All required fields present
+    REQUIRED_FIELDS="services.image services.port nginx.image nginx.port network.name network.driver_type"
+    FIELDS_OK=true
+    MISSING=""
+    for field in $REQUIRED_FIELDS; do
+        val=$(get_manifest "$field" 2>/dev/null || echo "")
+        if [ -z "$val" ]; then
+            FIELDS_OK=false; MISSING="$MISSING $field"
+        fi
+    done
+    if $FIELDS_OK; then
+        check "All required fields present and non-empty" "pass"
+    else
+        check "All required fields present and non-empty" "missing:$MISSING"
+    fi
+
+    # 3. Docker image exists locally
+    IMG=$(get_manifest "services.image" 2>/dev/null || echo "")
+    if docker image inspect "$IMG" &>/dev/null; then
+        check "Docker image '$IMG' exists locally" "pass"
+    else
+        check "Docker image '$IMG' exists locally" "image not found — run: docker build -t $IMG ."
+    fi
+
+    # 4. Nginx port not already bound
+    NGINX_PORT=$(get_manifest "nginx.port" 2>/dev/null || echo "")
+    if ss -tlnp 2>/dev/null | grep -q ":${NGINX_PORT} " || \
+       netstat -tlnp 2>/dev/null | grep -q ":${NGINX_PORT} "; then
+        check "Nginx port ${NGINX_PORT} is free" "port ${NGINX_PORT} is already in use"
+    else
+        check "Nginx port ${NGINX_PORT} is free" "pass"
+    fi
+
+    # 5. nginx.conf is syntactically valid (if it exists)
+    if [ -f "$NGINX_CONF" ]; then
+        TMP_CONF=$(mktemp /tmp/nginx-test-XXXXXX.conf)
+        sed 's|proxy_pass http://app:|proxy_pass http://127.0.0.1:|g' "$NGINX_CONF" > "$TMP_CONF"
+        if docker run --rm -v "${TMP_CONF}:/etc/nginx/conf.d/default.conf:ro" \
+            nginx:latest nginx -t 2>/dev/null; then
+            check "nginx.conf is syntactically valid" "pass"
+        else
+            check "nginx.conf is syntactically valid" "nginx -t reported errors"
+        fi
+        rm -f "$TMP_CONF"
+    fi
+
+    echo ""
+    echo "Result: ${PASS} passed, ${FAIL} failed"
+    [ "$FAIL" -eq 0 ] || exit 1
+}
+
+# ── subcommand: deploy ────────────────────────────────────────────────────────
+cmd_deploy() {
+    cmd_init
+
+    echo "→ Starting stack..."
+    docker compose up -d
+
+    echo "→ Waiting for health checks (timeout: 60s)..."
+    NGINX_PORT=$(get_manifest "nginx.port")
+    DEADLINE=$((SECONDS + 60))
+
+    until curl -sf "http://localhost:${NGINX_PORT}/healthz" > /dev/null 2>&1; do
+        if [ $SECONDS -ge $DEADLINE ]; then
+            echo "✗ Health check timed out after 60 seconds"
+            docker compose logs
+            exit 1
+        fi
+        echo "  waiting..."
+        sleep 3
+    done
+
+    echo "✓ Stack is healthy and serving on port ${NGINX_PORT}"
+}
+
+# ── subcommand: promote ───────────────────────────────────────────────────────
+cmd_promote() {
+    local target="${1:-}"
+    if [[ "$target" != "canary" && "$target" != "stable" ]]; then
+        echo "Usage: ./swiftdeploy promote [canary|stable]"
+        exit 1
+    fi
+
+    echo "→ Promoting to ${target} mode..."
+
+    # 1. Update mode in manifest.yaml
+    set_manifest "services.mode" "$target"
+
+    # 2. Regenerate docker-compose.yml with new MODE env var
+    cmd_init
+
+    # 3. Restart only the app container (not nginx)
+    docker compose up -d --no-deps app
+
+    # 4. Confirm new mode via /healthz
+    NGINX_PORT=$(get_manifest "nginx.port")
+    echo "→ Confirming health after restart..."
+    sleep 5
+    RESPONSE=$(curl -sf "http://localhost:${NGINX_PORT}/healthz" || echo '{"status":"unreachable"}')
+    echo "  /healthz response: $RESPONSE"
+
+    # 5. Check X-Mode header for canary
+    if [ "$target" = "canary" ]; then
+        HEADER=$(curl -sI "http://localhost:${NGINX_PORT}/" | grep -i "x-mode" || echo "none")
+        echo "  X-Mode header: $HEADER"
+    fi
+
+    echo "✓ Promoted to ${target}"
+}
+
+# ── subcommand: teardown ──────────────────────────────────────────────────────
+cmd_teardown() {
+    echo "→ Stopping and removing containers, networks, volumes..."
+    docker compose down -v
+
+    if [[ "${1:-}" == "--clean" ]]; then
+        echo "→ --clean: removing generated configs..."
+        rm -f "$COMPOSE_FILE" "$NGINX_CONF"
+        echo "✓ Generated configs removed"
+    fi
+
+    echo "✓ Teardown complete"
+}
+
+# ── router ────────────────────────────────────────────────────────────────────
+case "${1:-}" in
+    init)     cmd_init ;;
+    validate) cmd_validate ;;
+    deploy)   cmd_deploy ;;
+    promote)  cmd_promote "${2:-}" ;;
+    teardown) cmd_teardown "${2:-}" ;;
+    *)
+        echo "Usage: ./swiftdeploy [init|validate|deploy|promote|teardown]"
+        exit 1
+        ;;
+esac
