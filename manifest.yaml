@@ -5,9 +5,13 @@ nginx:
   image: nginx:latest
   port: 8080
   proxy_timeout: 30
+opa:
+  image: openpolicyagent/opa:latest
+  policies_dir: ./policies
+  port: 8181
 services:
   image: swift-deploy-1-node:latest
-  mode: canary
+  mode: stable
   port: 3000
   restart_policy: unless-stopped
   version: 1.0.0

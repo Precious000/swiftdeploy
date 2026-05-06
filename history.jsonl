@@ -1,0 +1,81 @@
+{"timestamp": 1778074113.572081, "event": "deploy", "mode": "stable"}
+{"timestamp": 1778076387.5433655, "event": "scrape", "total_requests": 137.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.29}
+{"timestamp": 1778076392.7432888, "event": "scrape", "total_requests": 118.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.27}
+{"timestamp": 1778076397.9415545, "event": "scrape", "total_requests": 137.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.25}
+{"timestamp": 1778076403.1413045, "event": "scrape", "total_requests": 119.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.23}
+{"timestamp": 1778076408.3423288, "event": "scrape", "total_requests": 137.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.21}
+{"timestamp": 1778076413.5427406, "event": "scrape", "total_requests": 137.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.19}
+{"timestamp": 1778076418.7440517, "event": "scrape", "total_requests": 120.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.18}
+{"timestamp": 1778076423.9454453, "event": "scrape", "total_requests": 138.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.16}
+{"timestamp": 1778076429.14488, "event": "scrape", "total_requests": 120.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.15}
+{"timestamp": 1778076434.3443916, "event": "scrape", "total_requests": 120.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.14}
+{"timestamp": 1778076443.077073, "event": "scrape", "total_requests": 139.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.12}
+{"timestamp": 1778076448.2822928, "event": "scrape", "total_requests": 121.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.11}
+{"timestamp": 1778076453.48769, "event": "scrape", "total_requests": 140.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.1}
+{"timestamp": 1778076458.6903238, "event": "scrape", "total_requests": 121.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.09}
+{"timestamp": 1778076463.8914814, "event": "scrape", "total_requests": 121.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.08}
+{"timestamp": 1778076469.100173, "event": "scrape", "total_requests": 141.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.08}
+{"timestamp": 1778076474.3024323, "event": "scrape", "total_requests": 141.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.07}
+{"timestamp": 1778076479.5036716, "event": "scrape", "total_requests": 141.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.06}
+{"timestamp": 1778076484.7033992, "event": "scrape", "total_requests": 141.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.14}
+{"timestamp": 1778076489.9073505, "event": "scrape", "total_requests": 123.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.21}
+{"timestamp": 1778076495.1068199, "event": "scrape", "total_requests": 123.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.19}
+{"timestamp": 1778076500.3071513, "event": "scrape", "total_requests": 123.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.17}
+{"timestamp": 1778076505.5147634, "event": "scrape", "total_requests": 123.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.16}
+{"timestamp": 1778076510.8034322, "event": "scrape", "total_requests": 143.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.15}
+{"timestamp": 1778076516.0149567, "event": "scrape", "total_requests": 143.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.14}
+{"timestamp": 1778076521.2553923, "event": "scrape", "total_requests": 124.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.12}
+{"timestamp": 1778076526.466108, "event": "scrape", "total_requests": 124.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.11}
+{"timestamp": 1778076531.6710315, "event": "scrape", "total_requests": 124.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.1}
+{"timestamp": 1778076536.8698514, "event": "scrape", "total_requests": 145.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.1}
+{"timestamp": 1778076542.068355, "event": "scrape", "total_requests": 145.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.09}
+{"timestamp": 1778076547.274972, "event": "scrape", "total_requests": 125.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.08}
+{"timestamp": 1778076552.473976, "event": "scrape", "total_requests": 125.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.15}
+{"timestamp": 1778076557.6794217, "event": "scrape", "total_requests": 146.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.14}
+{"timestamp": 1778076562.8864408, "event": "scrape", "total_requests": 146.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.12}
+{"timestamp": 1778076568.0943797, "event": "scrape", "total_requests": 126.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.11}
+{"timestamp": 1778076573.3027165, "event": "scrape", "total_requests": 126.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.1}
+{"timestamp": 1778076578.5031269, "event": "scrape", "total_requests": 147.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.1}
+{"timestamp": 1778076583.706235, "event": "scrape", "total_requests": 127.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.09}
+{"timestamp": 1778076588.9100604, "event": "scrape", "total_requests": 147.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.08}
+{"timestamp": 1778076594.1087728, "event": "scrape", "total_requests": 128.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.07}
+{"timestamp": 1778076599.316094, "event": "scrape", "total_requests": 147.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.15}
+{"timestamp": 1778077436.6242194, "event": "scrape", "total_requests": 12.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.3}
+{"timestamp": 1778077441.9234028, "event": "scrape", "total_requests": 12.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.27}
+{"timestamp": 1778077447.2224941, "event": "scrape", "total_requests": 2.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.25}
+{"timestamp": 1778077452.5242913, "event": "scrape", "total_requests": 13.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.23}
+{"timestamp": 1778077457.8337867, "event": "scrape", "total_requests": 2.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.27}
+{"timestamp": 1778077463.1316557, "event": "scrape", "total_requests": 14.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.25}
+{"timestamp": 1778077644.438868, "event": "scrape", "total_requests": 29.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.28}
+{"timestamp": 1778077649.746403, "event": "scrape", "total_requests": 26.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.26}
+{"timestamp": 1778077655.0507438, "event": "scrape", "total_requests": 26.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.24}
+{"timestamp": 1778077660.3691425, "event": "scrape", "total_requests": 30.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.22}
+{"timestamp": 1778077665.6835032, "event": "scrape", "total_requests": 26.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.2}
+{"timestamp": 1778077670.9893773, "event": "scrape", "total_requests": 31.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.18}
+{"timestamp": 1778077676.2942474, "event": "scrape", "total_requests": 31.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.17}
+{"timestamp": 1778077681.600086, "event": "scrape", "total_requests": 31.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.16}
+{"timestamp": 1778077686.9082143, "event": "scrape", "total_requests": 31.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.14}
+{"timestamp": 1778077692.2107005, "event": "scrape", "total_requests": 31.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.13}
+{"timestamp": 1778077697.5165477, "event": "scrape", "total_requests": 31.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.12}
+{"timestamp": 1778077765.70751, "event": "promote", "mode": "stable"}
+{"timestamp": 1778091526.6016374, "event": "scrape", "total_requests": 749.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.26}
+{"timestamp": 1778091531.9134939, "event": "scrape", "total_requests": 754.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.24}
+{"timestamp": 1778091624.5959573, "event": "promote", "mode": "stable"}
+{"timestamp": 1778091890.4044192, "event": "scrape", "total_requests": 787.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.15}
+{"timestamp": 1778091895.7076426, "event": "scrape", "total_requests": 785.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.2}
+{"timestamp": 1778091901.0091224, "event": "scrape", "total_requests": 788.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.18}
+{"timestamp": 1778091906.3180552, "event": "scrape", "total_requests": 785.0, "error_rate_pct": 0.0, "disk_free_gb": 3.5, "cpu_load": 0.17}
+{"timestamp": 1778092439.2406952, "event": "deploy", "mode": "stable"}
+{"timestamp": 1778092572.3599596, "event": "deploy", "mode": "stable"}
+{"timestamp": 1778092682.6665142, "event": "deploy", "mode": "stable"}
+{"timestamp": 1778093500.1243677, "event": "deploy", "mode": "stable"}
+{"timestamp": 1778093538.686546, "event": "scrape", "total_requests": 4.0, "error_rate_pct": 0.0, "disk_free_gb": 3.6, "cpu_load": 0.25}
+{"timestamp": 1778093543.9604533, "event": "scrape", "total_requests": 4.0, "error_rate_pct": 0.0, "disk_free_gb": 3.6, "cpu_load": 0.23}
+{"timestamp": 1778093549.2263188, "event": "scrape", "total_requests": 2.0, "error_rate_pct": 0.0, "disk_free_gb": 3.6, "cpu_load": 0.21}
+{"timestamp": 1778093554.5004666, "event": "scrape", "total_requests": 2.0, "error_rate_pct": 0.0, "disk_free_gb": 3.6, "cpu_load": 0.2}
+{"timestamp": 1778093567.8419166, "event": "promote", "mode": "canary"}
+{"timestamp": 1778093697.5838182, "event": "promote", "mode": "stable"}
+{"timestamp": 1778093787.5688064, "event": "promote", "mode": "canary"}
+{"timestamp": 1778093984.2106133, "event": "promote", "mode": "stable"}
+{"timestamp": 1778094147.4834723, "event": "promote", "mode": "canary"}
+{"timestamp": 1778094359.135255, "event": "promote", "mode": "stable"}
