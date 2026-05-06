@@ -4,11 +4,17 @@ A declarative deployment CLI that generates all infrastructure config files from
 
 ## Architecture
 manifest.yaml          ← the only file you ever edit
+
 ↓
+
 swiftdeploy CLI        ← reads manifest, fills templates, manages lifecycle
+
 ↓
+
 nginx.conf             ← generated (never hand-edited)
+
 docker-compose.yml     ← generated (never hand-edited)
+
 ↓
 ┌─────────────────────────────────────────┐
 │           swiftdeploy-net               │
@@ -17,7 +23,6 @@ docker-compose.yml     ← generated (never hand-edited)
 │  Nginx :8080  →  Python API :3000       │
 │                                         │
 │  OPA :8181  (internal only, no public)  │
-└─────────────────────────────────────────┘
 
 ## Requirements
 
