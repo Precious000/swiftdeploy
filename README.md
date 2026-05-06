@@ -2,28 +2,6 @@
 
 A declarative deployment CLI that generates all infrastructure config files from a single `manifest.yaml`, enforces deployment policies through OPA, and monitors itself with Prometheus metrics.
 
-## Architecture
-manifest.yaml          ← the only file you ever edit
-
-↓
-
-swiftdeploy CLI        ← reads manifest, fills templates, manages lifecycle
-
-↓
-
-nginx.conf             ← generated (never hand-edited)
-
-docker-compose.yml     ← generated (never hand-edited)
-
-↓
-┌─────────────────────────────────────────┐
-│           swiftdeploy-net               │
-│        (Docker bridge network)          │
-│                                         │
-│  Nginx :8080  →  Python API :3000       │
-│                                         │
-│  OPA :8181  (internal only, no public)  │
-
 ## Requirements
 
 - Ubuntu 22.04+ EC2 instance
